@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwame's Tyres & Auto Care | Premium Tyres in Ghana</title>
+    <!-- Google Fonts & FontAwesome for Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <span><i class="fa-solid fa-location-dot"></i> KUMASI / Santasi Showrooms, Ghana</span>
+        <span><i class="fa-solid fa-phone"></i> Hotline: +233 24 000 0000</span>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo"><i class="fa-solid fa-circle-notch"></i>KWAME'S<span>TYRES</span></a>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#catalog">Catalogue</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="https://wa.me/233544662523?text=Hello%2C%20I%20need%20assistance%20with%20car%20tyres." target="_blank" class="cta-btn">
+                <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>High-Performance Tyres Built for <span>Ghanaian Roads</span></h1>
+        <p>Browse top-grade brand new & imported second-use tyres engineered for durability against potholes and rough terrain.</p>
+        
+        <!-- Interactive Tyre Finder Widget -->
+        <div class="finder-box">
+            <div class="input-group">
+                <label for="width">Tyre Width</label>
+                <select id="width">
+                    <option value="">Select Width</option>
+                    <option value="195">195 mm</option>
+                    <option value="205">205 mm</option>
+                    <option value="215">215 mm</option>
+                    <option value="225">225 mm</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="profile">Profile / Ratio</label>
+                <select id="profile">
+                    <option value="">Select Profile</option>
+                    <option value="55">55</option>
+                    <option value="60">60</option>
+                    <option value="65">65</option>
+                    <option value="70">70</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="rim">Rim Size</label>
+                <select id="rim">
+                    <option value="">Select Rim</option>
+                    <option value="15">R15</option>
+                    <option value="16">R16</option>
+                    <option value="17">R17</option>
+                    <option value="18">R18</option>
+                </select>
+            </div>
+            <button class="finder-btn" onclick="filterTyres()"><i class="fa-solid fa-magnifying-glass"></i> Search Tyres</button>
+        </div>
+    </section>
+
+    <!-- Feature Highlights -->
+    <section class="features">
+        <div class="feature-card">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h3>Pothole-Resistant Durability</h3>
+            <p>Reinforced sidewalls designed to withstand tough road conditions across the country.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <h3>Free Balancing & Fitting</h3>
+            <p>Get complimentary professional wheel balancing, alignment check, and fitting at our yard.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-truck-fast"></i>
+            <h3>Nationwide Delivery</h3>
+            <p>Fast dispatch via VIP transport or door-to-door delivery across all regions.</p>
+        </div>
+    </section>
+
+    <!-- Tyre Catalog Section -->
+    <section class="catalog" id="catalog">
+        <div class="section-title">
+            <h2>Featured Tyre Catalog</h2>
+            <p>Top international brands optimized for saloon cars, SUVs, and pickups.</p>
+        </div>
+
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card" data-rim="16" data-width="205">
+                <span class="badge">Best Seller</span>
+                <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=500&q=80" alt="Tyre" class="product-img">
+                <div class="product-details">
+                    <h3>Bridgestone Ecopia</h3>
+                    <span class="size">Size: 205/60 R16</span>
+                    <p style="font-size: 0.8rem; color: #666;">High fuel efficiency & long tread life.</p>
+                    <div class="price-row">
+                        <span class="price">GH₵ 1,450</span>
+                        <a href="https://wa.me/233240000000?text=I%20want%20to%20order%20Bridgestone%20Ecopia%20205/60%20R16" target="_blank" class="order-btn">Order Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card" data-rim="17" data-width="225">
+                <span class="badge" style="background:#333;">SUV Special</span>
+                <img src="https://images.unsplash.com/photo-1543465077-db45d34b87a5?auto=format&fit=crop&w=500&q=80" alt="Tyre" class="product-img">
+                <div class="product-details">
+                    <h3>Michelin Primacy SUV</h3>
+                    <span class="size">Size: 225/65 R17</span>
+                    <p style="font-size: 0.8rem; color: #666;">Superior wet braking and smooth comfort.</p>
+                    <div class="price-row">
+                        <span class="price">GH₵ 2,100</span>
+                        <a href="https://wa.me/233240000000?text=I%20want%20to%20order%20Michelin%20Primacy%20SUV%20225/65%20R17" target="_blank" class="order-btn">Order Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card" data-rim="15" data-width="195">
+                <span class="badge" style="background:#2e7d32;">Budget Pick</span>
+                <img src="https://images.unsplash.com/photo-1607860108855-64c2079ed3f4?auto=format&fit=crop&w=500&q=80" alt="Tyre" class="product-img">
+                <div class="product-details">
+                    <h3>Triangle All-Season</h3>
+                    <span class="size">Size: 195/65 R15</span>
+                    <p style="font-size: 0.8rem; color: #666;">Great grip and heavy load endurance.</p>
+                    <div class="price-row">
+                        <span class="price">GH₵ 880</span>
+                        <a href="https://wa.me/233240000000?text=I%20want%20to%20order%20Triangle%20195/65%20R15" target="_blank" class="order-btn">Order Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card" data-rim="18" data-width="225">
+                <span class="badge">Heavy Duty</span>
+                <img src="https://images.unsplash.com/photo-1578844251758-2f71da64c96f?auto=format&fit=crop&w=500&q=80" alt="Tyre" class="product-img">
+                <div class="product-details">
+                    <h3>Dunlop Grandtrek</h3>
+                    <span class="size">Size: 225/55 R18</span>
+                    <p style="font-size: 0.8rem; color: #666;">Built for rugged performance and safety.</p>
+                    <div class="price-row">
+                        <span class="price">GH₵ 2,400</span>
+                        <a href="https://wa.me/233240000000?text=I%20want%20to%20order%20Dunlop%20Grandtrek%20225/55%20R18" target="_blank" class="order-btn">Order Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Local Info & Services Section -->
+    <section class="local-info" id="services">
+        <div>
+            <h2>Why Choose <span>Kwame’s Tyres?</span></h2>
+            <p>We understand the demands of driving in Ghana. That's why we supply only certified authentic brands that give you high mileage and safe stopping distances.</p>
+            <ul class="perks-list">
+                <li><i class="fa-solid fa-check-circle"></i> Genuine manufacturer warranties included</li>
+                <li><i class="fa-solid fa-check-circle"></i> Mobile fitting support available for fleets</li>
+                <li><i class="fa-solid fa-check-circle"></i> Flexible payment via Mobile Money (MTN, Vodafone, AT) & Cash</li>
+            </ul>
+        </div>
+        <div class="map-box">
+            <div>
+                <i class="fa-solid fa-map-location-dot" style="font-size: 2rem; color: var(--primary); margin-bottom: 10px;"></i>
+                <p><strong>Main Fitting Center:</strong><br>Spintex Road (Near Coca-Cola Bottling Plant), Accra<br><em>& Santasi Junction Branch, Kumasi</em></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Kwame's Tyres & Auto Care Ltd. All Rights Reserved. Designed for the Ghanaian Auto Market.</p>
+    </footer>
+
+    <!-- JavaScript File Link -->
+    <script src="script.js"></script>
+</body>
+</html>
