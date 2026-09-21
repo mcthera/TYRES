@@ -1,6 +1,8 @@
 // Replace these with your JSONBin details.
 const BIN_ID = '6ab178beffd5d16053203f93';
 const API_KEY = '$2a$10$naPldLFtbAB1mQmuzuFfHevWBpB22kc8qHLUo1HXwYOJsk3C2ny6.';
+const CLOUDINARY_CLOUD_NAME = 'qfx7i5zm9';
+const CLOUDINARY_UPLOAD_PRESET = 'tyre_upload_preset';
 
 const fallbackProducts = [
     {
@@ -146,18 +148,36 @@ function fillFormWithProduct(product) {
 }
 
 // 1. SETUP CLOUDINARY UPLOAD WIDGET
-const myWidget = cloudinary.createUploadWidget({
-    cloudName: 'qfx75zm9',
-    uploadPreset: 'tyre_upload_preset',
-}, (error, result) => {
-    if (!error && result && result.event === "success") {
-        uploadedImageUrl = result.info.secure_url;
-        document.getElementById('upload-status').innerText = "✓ Picture Uploaded Successfully!";
-    }
-});
+let myWidget = null;
 
-document.getElementById("upload_widget").addEventListener("click", function(e) {
-    e.preventDefault();
+if (window.cloudinary) {
+    myWidget = cloudinary.createUploadWidget({
+        cloudName: 'qfx75zm9',
+        uploadPreset: 'tyre_upload_preset',
+    }, (error, result) => {
+        if (error) {
+            console.error('Cloudinary upload error:', error);
+            document.getElementById('upload-status').innerText = `Upload failed: ${error.statusText || error.message || 'Check Cloudinary settings'}`;
+            return;
+        }
+
+        if (result && result.event === 'success') {
+            uploadedImageUrl = result.info.secure_url;
+            document.getElementById('upload-status').innerText = '✓ Picture Uploaded Successfully!';
+        }
+    });
+} else {
+    console.error('Cloudinary Upload Widget failed to load.');
+}
+
+document.getElementById('upload_widget').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    if (!myWidget) {
+        document.getElementById('upload-status').innerText = 'Upload service is unavailable. Refresh and try again.';
+        return;
+    }
+
     myWidget.open();
 }, false);
 
