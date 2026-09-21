@@ -1,5 +1,8 @@
-// Initial Products Array
-let products = JSON.parse(localStorage.getItem('ghana_tyres')) || [
+// Replace these with your JSONBin details.
+const BIN_ID = '6ab178beffd5d16053203f93';
+const API_KEY = '$2a$10$naPldLFtbAB1mQmuzuFfHevWBpB22kc8qHLUo1HXwYOJsk3C2ny6.';
+
+const fallbackProducts = [
     {
         id: 'default-1',
         name: "Bridgestone Ecopia",
@@ -26,10 +29,7 @@ let products = JSON.parse(localStorage.getItem('ghana_tyres')) || [
     }
 ];
 
-products = products.map((product, index) => ({
-    ...product,
-    id: product.id || `tyre-${Date.now()}-${index}`
-}));
+let products = [];
 
 const ADMIN_PASSWORD = '123';
 
@@ -37,8 +37,72 @@ let uploadedImageUrl = "";
 let editingProductId = null;
 let isAdminMode = localStorage.getItem('tyre_admin_access') === 'true';
 
-function saveProducts() {
+function normalizeProducts(items) {
+    return (Array.isArray(items) ? items : []).map((product, index) => ({
+        ...product,
+        id: product.id || `tyre-${Date.now()}-${index}`
+    }));
+}
+
+function saveProductsLocally() {
     localStorage.setItem('ghana_tyres', JSON.stringify(products));
+}
+
+function hasJsonBinConfig() {
+    return BIN_ID !== 'YOUR_JSONBIN_ID_HERE' && API_KEY !== 'YOUR_JSONBIN_MASTER_KEY_HERE';
+}
+
+async function syncProductsToCloud() {
+    if (!hasJsonBinConfig()) {
+        throw new Error('JSONBin details have not been configured.');
+    }
+
+    const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Master-Key': API_KEY
+        },
+        body: JSON.stringify({ tyres: products })
+    });
+
+    if (!response.ok) {
+        throw new Error(`JSONBin sync failed with status ${response.status}.`);
+    }
+}
+
+async function saveProducts() {
+    saveProductsLocally();
+    await syncProductsToCloud();
+}
+
+async function fetchProducts() {
+    if (!hasJsonBinConfig()) {
+        products = normalizeProducts(JSON.parse(localStorage.getItem('ghana_tyres')) || fallbackProducts);
+        displayProducts(products);
+        return;
+    }
+
+    try {
+        const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+            headers: {
+                'X-Master-Key': API_KEY
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`JSONBin load failed with status ${response.status}.`);
+        }
+
+        const data = await response.json();
+        products = normalizeProducts(data.record?.tyres);
+        saveProductsLocally();
+        displayProducts(products);
+    } catch (error) {
+        console.log('Error loading from cloud, using fallback data', error);
+        products = normalizeProducts(JSON.parse(localStorage.getItem('ghana_tyres')) || fallbackProducts);
+        displayProducts(products);
+    }
 }
 
 function setFormMode(isEditing) {
@@ -83,7 +147,7 @@ function fillFormWithProduct(product) {
 
 // 1. SETUP CLOUDINARY UPLOAD WIDGET
 const myWidget = cloudinary.createUploadWidget({
-    cloudName: 'qfx75zm9',
+    cloudName: 'qfx7i5zm9',
     uploadPreset: 'tyre_upload_preset',
 }, (error, result) => {
     if (!error && result && result.event === "success") {
@@ -150,7 +214,8 @@ document.getElementById('products-grid').addEventListener('click', function(even
         if (!confirmDelete) return;
 
         products = products.filter(product => product.id !== productId);
-        saveProducts();
+        saveProductsLocally();
+        syncProductsToCloud().catch(error => console.error('Could not sync deleted product:', error));
         displayProducts(products);
 
         if (editingProductId === productId) {
@@ -170,7 +235,7 @@ document.getElementById('products-grid').addEventListener('click', function(even
 });
 
 // 3. HANDLE NEW ADMIN SUBMISSION FROM PHONE/LAPTOP
-document.getElementById('add-product-form').addEventListener('submit', function(e) {
+document.getElementById('add-product-form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     if (!uploadedImageUrl && !editingProductId) {
@@ -199,7 +264,6 @@ document.getElementById('add-product-form').addEventListener('submit', function(
             };
         });
 
-        alert("Success! Tyre listing updated.");
     } else {
         const newProduct = {
             id: `tyre-${Date.now()}`,
@@ -207,12 +271,18 @@ document.getElementById('add-product-form').addEventListener('submit', function(
         };
 
         products.unshift(newProduct);
-        alert("Success! Tyre has been posted and is now live on the website.");
     }
 
-    saveProducts();
-    displayProducts(products);
-    resetFormState();
+    try {
+        await saveProducts();
+        displayProducts(products);
+        alert(editingProductId ? 'Success! Tyre listing updated globally.' : 'Success! Tyre published globally to all devices.');
+        resetFormState();
+    } catch (error) {
+        displayProducts(products);
+        alert('Tyre saved on this device, but cloud sync failed. Check your JSONBin details and connection.');
+        console.error('Could not sync product:', error);
+    }
 });
 
 document.getElementById('cancel-edit-btn').addEventListener('click', function() {
@@ -349,6 +419,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.onload = function() {
-    displayProducts(products);
+    fetchProducts();
     setFormMode(false);
 };
