@@ -384,6 +384,62 @@ header {
     padding: 20px;
 }
 
+.admin-section.hidden,
+.admin-login-modal.hidden {
+    display: none;
+}
+
+.admin-section.visible,
+.admin-login-modal.visible {
+    display: block;
+}
+
+.admin-login-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.admin-login-box {
+    background: #fff;
+    color: #111;
+    width: min(420px, calc(100% - 30px));
+    border-radius: 12px;
+    padding: 25px 20px;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.admin-login-box h3 {
+    margin-bottom: 10px;
+    color: var(--primary);
+}
+
+.admin-login-box p {
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.admin-login-box input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.login-message {
+    color: #d32f2f;
+    min-height: 20px;
+    font-size: 0.85rem;
+    margin-top: 8px;
+}
+
 /* Footer */
 footer {
     background: #080808;
