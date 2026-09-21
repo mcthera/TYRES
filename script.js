@@ -83,8 +83,8 @@ function fillFormWithProduct(product) {
 
 // 1. SETUP CLOUDINARY UPLOAD WIDGET
 const myWidget = cloudinary.createUploadWidget({
-    cloudName: 'demo',
-    uploadPreset: 'ml_default',
+    cloudName: 'qfx75zm9',
+    uploadPreset: 'tyre_upload_preset',
 }, (error, result) => {
     if (!error && result && result.event === "success") {
         uploadedImageUrl = result.info.secure_url;
