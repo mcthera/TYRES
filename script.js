@@ -350,11 +350,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (menuToggle && navbarMenu) {
         menuToggle.addEventListener('click', function() {
             const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+            const icon = menuToggle.querySelector('i');
 
             menuToggle.setAttribute('aria-expanded', String(!isOpen));
             menuToggle.setAttribute('aria-label', isOpen ? 'Open navigation menu' : 'Close navigation menu');
             menuToggle.classList.toggle('is-open', !isOpen);
             navbarMenu.classList.toggle('is-open', !isOpen);
+
+            if (icon) {
+                icon.className = isOpen ? 'fa-solid fa-bars' : 'fa-solid fa-xmark';
+            }
         });
 
         navbarMenu.querySelectorAll('a').forEach(link => {
