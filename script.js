@@ -259,12 +259,38 @@ function setAdminAccess(authorized) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navbarMenu = document.getElementById('navbar-menu');
     const adminPanel = document.getElementById('admin-panel');
     const adminLink = document.getElementById('admin-nav-link');
     const adminModal = document.getElementById('admin-login-modal');
     const loginForm = document.getElementById('admin-login-form');
     const loginMessage = document.getElementById('admin-login-message');
     const logoutBtn = document.getElementById('admin-logout-btn');
+
+    function closeMobileMenu() {
+        if (!menuToggle || !navbarMenu) return;
+
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Open navigation menu');
+        menuToggle.classList.remove('is-open');
+        navbarMenu.classList.remove('is-open');
+    }
+
+    if (menuToggle && navbarMenu) {
+        menuToggle.addEventListener('click', function() {
+            const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+
+            menuToggle.setAttribute('aria-expanded', String(!isOpen));
+            menuToggle.setAttribute('aria-label', isOpen ? 'Open navigation menu' : 'Close navigation menu');
+            menuToggle.classList.toggle('is-open', !isOpen);
+            navbarMenu.classList.toggle('is-open', !isOpen);
+        });
+
+        navbarMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+    }
 
     if (isAdminMode) {
         setAdminAccess(true);

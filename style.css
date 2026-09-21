@@ -53,6 +53,22 @@ header {
     padding: 15px 5%;
 }
 
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: 0;
+    color: var(--secondary);
+    cursor: pointer;
+    font-size: 1.35rem;
+    padding: 8px;
+}
+
 .logo {
     font-size: 1.5rem;
     font-weight: 800;
@@ -457,7 +473,103 @@ footer p {
 
 /* Responsive */
 @media(max-width: 768px) {
-    .nav-links { display: none; }
-    .hero h1 { font-size: 2.2rem; }
-    .finder-box { grid-template-columns: 1fr; }
+    .top-bar {
+        flex-direction: column;
+        gap: 3px;
+        text-align: center;
+        font-size: 0.72rem;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+        padding: 12px 5%;
+    }
+
+    .logo {
+        font-size: 1.15rem;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .menu-toggle.is-open {
+        color: var(--primary);
+    }
+
+    .navbar-menu {
+        display: none;
+        flex-basis: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding-top: 12px;
+    }
+
+    .navbar-menu.is-open {
+        display: flex;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+    }
+
+    .nav-links li {
+        border-top: 1px solid #eeeeee;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 12px 4px;
+    }
+
+    .navbar-menu .cta-btn {
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .hero {
+        padding: 70px 5%;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero p {
+        font-size: 0.95rem;
+    }
+
+    .finder-box {
+        grid-template-columns: 1fr;
+        padding: 18px;
+    }
+
+    .features,
+    .catalog {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    .section-title {
+        margin-bottom: 30px;
+    }
+
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+
+    .price-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .order-btn {
+        text-align: center;
+        width: 100%;
+    }
 }
